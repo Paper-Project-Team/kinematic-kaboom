@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletComputer : MonoBehaviour
+public class ProjectileScript : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     [SerializeField] private GameObject splashSprite;
@@ -22,20 +22,20 @@ public class BulletComputer : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+       
+        if(other.tag == "Computer")
         {
             Destroy(other.gameObject, 0.2f);
-            //Do game over
+            PlayerPrefs.SetInt("CurrentScore", PlayerPrefs.GetInt("CurrentScore") + 1);
             Destroy(this);
         }
-
-
-        if (other.tag == "Killzone")
+        
+        if(other.tag == "Killzone")
         {
             Destroy(this);
         }
 
-        if (other.tag == "Water")
+        if(other.tag == "Water")
         {
             GameObject splash = Instantiate(splashSprite, transform.position, Quaternion.identity);
             Destroy(splash, 0.15f);
@@ -43,4 +43,5 @@ public class BulletComputer : MonoBehaviour
         }
     }
 
+   
 }

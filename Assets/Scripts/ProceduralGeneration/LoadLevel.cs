@@ -35,22 +35,24 @@ public class LoadLevel : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update(){
+    void Update()
+    {
+
     }
 
-    void IncrementScore(){
+    public static void IncrementScore(){
         score = score + 1;
     }
 
     void CalculateDistance(){
-        distance = UnityEngine.Random.Range(8.0000f, 15.0000f);
+        distance = 13f; // UnityEngine.Random.Range(8.0000f, 15.0000f);
         distanceInMeters = Mathf.Ceil(distance * 100);
         
         Debug.Log(distance);
     }
 
     void SpawnBattleships(){
-        float offset = UnityEngine.Random.Range(-2f, 2f);
+        float offset = 0f;// UnityEngine.Random.Range(-2f, 2f);
         float fromCenter = distance / 2;
         Vector2 playerPos = new Vector2(-fromCenter + offset, -3.92f);
         Vector2 computerPos = new Vector2(fromCenter + offset, -3.92f);

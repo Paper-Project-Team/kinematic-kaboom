@@ -20,15 +20,17 @@ public class ShootingScript : MonoBehaviour
 
     void Update()
     {
-        //currentRot.eulerAngles = new Vector3(0, 0, launchAngle);
-        //transform.rotation = currentRot;
+        currentRot.eulerAngles = new Vector3(0, 0, launchAngle);
+       // firepoint.transform.rotation = currentRot;
+
+        
     }
 
     public void Shoot()
     {
         artilleryShotAudio.Play();
 
-        GameObject projectileClone = Instantiate(bullet, firepoint.transform.position, firepoint.transform.rotation);
+        GameObject projectileClone = Instantiate(bullet, firepoint.transform.position, currentRot);
 
         initialVelocity = initialVelocity / 10;
 
@@ -45,7 +47,10 @@ public class ShootingScript : MonoBehaviour
 
         Vector2 fireDir = new Vector2(xSpeed, ySpeed);
         Rigidbody2D proj = projectileClone.GetComponent<Rigidbody2D>();
+        ProjectileScript pscript = projectileClone.GetComponent<ProjectileScript>();
         proj.AddForce(fireDir, ForceMode2D.Impulse);
+
+        
 
     }
 }

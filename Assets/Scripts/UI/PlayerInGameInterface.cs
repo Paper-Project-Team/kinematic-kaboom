@@ -35,6 +35,11 @@ public class PlayerInGameInterface : MonoBehaviour
         currentScoreDisplayTextField.GetComponent<Text>().text = Convert.ToString(PlayerPrefs.GetInt("CurrentScore"));
         DisplayDistance();
     }
+    void Update()
+    {
+        currentScoreDisplayTextField.GetComponent<Text>().text = Convert.ToString(PlayerPrefs.GetInt("CurrentScore"));
+        highScoreDisplayTextField.GetComponent<Text>().text = Convert.ToString(PlayerPrefs.GetInt("HighScore"));
+    }
 
     public void EnterInput(){
         AssignInputs();
