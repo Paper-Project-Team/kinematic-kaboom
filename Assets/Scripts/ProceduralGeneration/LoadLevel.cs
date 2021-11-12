@@ -25,39 +25,47 @@ public class LoadLevel : MonoBehaviour
     public GameObject fighterJet;
 
     public static int score = -1;
+    private float offset;
 
     // Start is called before the first frame update
     void Start(){
+        IncrementScore();
         CalculateDistance();
         SpawnBattleships();
-        SpawnBackgroundShips();
-        IncrementScore();
+        SpawnEnemyShip();
     }
 
+    
     // Update is called once per frame
-    void Update()
-    {
-
+    void Update(){
     }
 
-    public static void IncrementScore(){
+    public void IncrementScore(){
         score = score + 1;
     }
 
-    void CalculateDistance(){
-        distance = 13f; // UnityEngine.Random.Range(8.0000f, 15.0000f);
+    public void CalculateDistance(){
+        distance = UnityEngine.Random.Range(8.0000f, 15.0000f);
         distanceInMeters = Mathf.Ceil(distance * 100);
-        
-        Debug.Log(distance);
+        offset = UnityEngine.Random.Range(-2f, 2f);
+       
     }
 
     void SpawnBattleships(){
-        float offset = 0f;// UnityEngine.Random.Range(-2f, 2f);
+        
         float fromCenter = distance / 2;
         Vector2 playerPos = new Vector2(-fromCenter + offset, -3.92f);
-        Vector2 computerPos = new Vector2(fromCenter + offset, -3.92f);
         player = Instantiate(playerBattleship, playerPos, playerBattleship.transform.rotation); // Player
+    }
+
+    public void SpawnEnemyShip()
+    {
+       
+        float fromCenter = distance / 2;
+        Vector2 computerPos = new Vector2(fromCenter + offset, -3.92f);
         computer = Instantiate(computerBattleship, computerPos, computerBattleship.transform.rotation); // Computer
+        EnemyScript ascript = computer.GetComponentInChildren<EnemyScript>();
+        ascript.enabled = true;
     }
 
     void SpawnBackgroundShips(){

@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     {
         currentScore++;
     }
+    
     void TakeDamage(int damage){
         health -= damage;
         if(health <= 0)
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
     // Saves highest score.
     public void SavePlayer(){
         currentScore = PlayerPrefs.GetInt("CurrentScore");
-        if (currentScore > highScore)
+        if (currentScore >= highScore)
             PlayerPrefs.SetInt("HighScore", currentScore);
         PlayerPrefs.SetInt("CurrentScore", currentScore);
     }

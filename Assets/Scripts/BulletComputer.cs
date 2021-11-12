@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.Audio;
+
 public class BulletComputer : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     [SerializeField] private GameObject splashSprite;
     // Start is called before the first frame update
+
+    public AudioSource splashAudio; // Water Splash
+    public AudioSource inKillZoneAudio; // Explosion
+    public AudioSource hitComputer; // Bullet hit metal
+    
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -26,20 +33,20 @@ public class BulletComputer : MonoBehaviour
         {
             Destroy(other.gameObject, 0.2f);
             //Do game over
-            Destroy(this);
+            Destroy(gameObject);
         }
 
 
         if (other.tag == "Killzone")
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         if (other.tag == "Water")
         {
             GameObject splash = Instantiate(splashSprite, transform.position, Quaternion.identity);
             Destroy(splash, 0.15f);
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 

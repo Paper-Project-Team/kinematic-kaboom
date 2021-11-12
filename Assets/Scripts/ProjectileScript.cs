@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.Audio;
+
 public class ProjectileScript : MonoBehaviour
 {
+    public GameObject gameGen;
     private Rigidbody2D rb2d;
     [SerializeField] private GameObject splashSprite;
+    public GameObject menuGen;
     // Start is called before the first frame update
+
+    public AudioSource splashAudio; // Water Splash
+    public AudioSource inKillZoneAudio; // Explosion
+    public AudioSource hitComputer; // Bullet hit metal
+
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -26,20 +35,23 @@ public class ProjectileScript : MonoBehaviour
         if(other.tag == "Computer")
         {
             Destroy(other.gameObject, 0.2f);
-            PlayerPrefs.SetInt("CurrentScore", PlayerPrefs.GetInt("CurrentScore") + 1);
-            Destroy(this);
+            gameGen.GetComponent<LoadLevel>().IncrementScore();
+            gameGen.GetComponent<LoadLevel>().CalculateDistance();
+            gameGen.GetComponent<LoadLevel>().SpawnEnemyShip();
+            menuGen.GetComponent<PlayerInGameInterface>().DisplayDistance();
+            Destroy(gameObject);
         }
         
         if(other.tag == "Killzone")
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         if(other.tag == "Water")
         {
             GameObject splash = Instantiate(splashSprite, transform.position, Quaternion.identity);
             Destroy(splash, 0.15f);
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
